@@ -175,8 +175,13 @@ class Utils {
         const audioPath = `./audio/${englishText}_${targetLang}.mp3`;
         
         const audio = new Audio(audioPath);
-        audio.play().catch(e => {
-            console.warn(`[TTS] Failed to play audio: ${audioPath}. Wait for user interaction first.`, e);
-        });
+        audio.preload = 'auto'; // Force browser to load it immediately
+        
+        // Wait 500ms before playing to ensure speakers wake up and audio buffers
+        setTimeout(() => {
+            audio.play().catch(e => {
+                console.warn(`[TTS] Failed to play audio: ${audioPath}. Wait for user interaction first.`, e);
+            });
+        }, 500);
     }
 }
