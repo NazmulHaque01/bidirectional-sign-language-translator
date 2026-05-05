@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bidirectional Bangla Sign Language Translator — Real-time gesture recognition and speech-to-sign translation">
     <title>🤟 Bangla Sign Language Translator</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-512.png">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -199,6 +201,17 @@
     <script src="js/sign-to-speech.js"></script>
     <script src="js/speech-to-sign.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- Service Worker Registration for PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('[Service Worker] Registered', reg))
+                    .catch(err => console.log('[Service Worker] Registration failed', err));
+            });
+        }
+    </script>
 </body>
 
 </html>
