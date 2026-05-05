@@ -154,8 +154,12 @@ const SpeechToSign = {
         }
 
         this.recognition = new SpeechRecognition();
-        // this.recognition.lang = 'bn-IN';
-        this.recognition.lang = navigator.language.startsWith('bn') ? navigator.language : 'bn-BD';
+        
+        // Edge backend (Azure) struggles with bn-BD, but accepts bn-IN more reliably.
+        // Chrome/Google backend handles bn-BD perfectly.
+        const isEdge = navigator.userAgent.indexOf("Edg") > -1;
+        this.recognition.lang = isEdge ? 'bn-IN' : (navigator.language.startsWith('bn') ? navigator.language : 'bn-BD');
+        
         this.recognition.continuous = true;
         this.recognition.interimResults = true;
 
