@@ -14,7 +14,7 @@
   <img src="https://img.shields.io/badge/ML-MediaPipe%20%2B%20Custom%20MLP-green?style=flat-square" alt="ML">
   <img src="https://img.shields.io/badge/Classes-60%20Gestures-purple?style=flat-square" alt="Classes">
   <img src="https://img.shields.io/badge/Accuracy-92%25-brightgreen?style=flat-square" alt="Accuracy">
-  <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square" alt="License">
+  <img src="https://img.shields.io/badge/License-Custom-lightgrey?style=flat-square" alt="License">
 </p>
 
 ---
@@ -165,7 +165,7 @@ Then open **http://localhost:8000** in Chrome or Edge.
 | Firefox | ✅ | ❌ (no Speech API) | ✅ |
 | Safari | ✅ | ⚠️ (partial) | ✅ |
 
-> **Note:** Voice input uses the Web Speech API which is primarily supported in Chromium-based browsers (Chrome, Edge).
+> **Note:** For the smoothest performance and best voice recognition support, **Google Chrome** is highly recommended. Other browsers may experience latency or limited features in the Speech-to-Sign module.
 
 ---
 

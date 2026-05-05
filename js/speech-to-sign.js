@@ -139,6 +139,13 @@ const SpeechToSign = {
             Utils.log('[Speech→Sign] WARNING: Voice input requires HTTPS. Run "python serve.py" to use voice.', 'warning');
         }
 
+        // Browser check: Suggest Chrome for best speech support
+        const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+        if (!isChrome) {
+            this.showError('Best experience in Google Chrome. Other browsers may have limited voice support.');
+            Utils.log('[Speech→Sign] Non-Chrome browser detected. Voice recognition may be unstable.', 'info');
+        }
+
         // Setup speech recognition
         this.setupSpeechRecognition();
         Utils.log('[Speech→Sign] Ready', 'success');
@@ -154,12 +161,12 @@ const SpeechToSign = {
         }
 
         this.recognition = new SpeechRecognition();
-        
+
         // Edge backend (Azure) struggles with bn-BD, but accepts bn-IN more reliably.
         // Chrome/Google backend handles bn-BD perfectly.
         const isEdge = navigator.userAgent.indexOf("Edg") > -1;
         this.recognition.lang = isEdge ? 'bn-IN' : (navigator.language.startsWith('bn') ? navigator.language : 'bn-BD');
-        
+
         this.recognition.continuous = true;
         this.recognition.interimResults = true;
 
@@ -213,7 +220,7 @@ const SpeechToSign = {
 
                 // Provide specific, actionable messages for known errors
                 const errorMessages = {
-                    'network': '❌ Network error — Run "python serve.py" and open http://localhost:8000',
+                    'network': '❌ Network error',
                     'not-allowed': '❌ Microphone permission denied — Click the lock icon in the address bar to allow',
                     'no-speech': '🔇 No speech detected — Try again',
                     'audio-capture': '❌ No microphone found — Check your audio device',
@@ -223,14 +230,7 @@ const SpeechToSign = {
 
                 status.textContent = errorMessages[event.error] || `❌ Error: ${event.error}`;
 
-                // For network error, also show in the error area for visibility
-                if (event.error === 'network') {
-                    this.showError(
-                        'For localhost. Please run "python serve.py" ' +
-                        'and open http://localhost:8000 in Chrome'
-                    );
-                    Utils.log('[Speech→Sign] Network error — page must be served via localhost for Web Speech API', 'error');
-                }
+
             }
         };
 
