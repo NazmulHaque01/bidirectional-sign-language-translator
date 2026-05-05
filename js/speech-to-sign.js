@@ -177,7 +177,7 @@ const SpeechToSign = {
 
         this.recognition.onstart = () => {
             this.isListening = true;
-            this.processedIndices = new Set(); // Mobile fix: Reset processed indices for new session
+            this.lastProcessedSessionText = ''; // Reset for new session
             const btn = document.getElementById('sptsVoiceBtn');
             if (btn) { btn.classList.add('recording'); btn.textContent = '🎤 Listening...'; }
             const status = document.getElementById('sptsVoiceStatus');
@@ -189,36 +189,57 @@ const SpeechToSign = {
 
         this.recognition.onresult = (event) => {
             let interimTranscript = '';
-            const input = document.getElementById('sptsTextInput');
+            let sessionFinals = [];
 
-            for (let i = event.resultIndex; i < event.results.length; i++) {
-                const transcript = event.results[i][0].transcript;
-                
+            // 1. Collect all finals and interims from the event
+            for (let i = 0; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript.trim();
                 if (event.results[i].isFinal) {
-                    // Mobile fix: track processed indices to prevent duplicate word appends
-                    // Chrome on Android often re-sends the same index as 'final' multiple times.
-                    if (!this.processedIndices.has(i)) {
-                        this.processedIndices.add(i);
-                        const finalChunk = transcript.trim();
-                        
-                        if (input) {
-                            const current = input.value;
-                            input.value = (current + (current.length > 0 ? ' ' : '') + finalChunk).trim();
-                        }
-
-                        // Reset silence timeout
-                        if (this.silenceTimeout) clearTimeout(this.silenceTimeout);
-                        this.silenceTimeout = setTimeout(() => {
-                            if (this.isListening) {
-                                this.recognition.stop();
-                                const status = document.getElementById('sptsVoiceStatus');
-                                if (status) status.textContent = '⏹️ Stopped (2s silence)';
-                            }
-                        }, this.SILENCE_DURATION);
-                    }
+                    sessionFinals.push(transcript);
                 } else {
-                    interimTranscript += transcript;
+                    interimTranscript += transcript + ' ';
                 }
+            }
+
+            // 2. Reconstruct the clean session text, handling Android Chrome's cumulative bug
+            let reconstructedSessionText = '';
+            for (let chunk of sessionFinals) {
+                if (reconstructedSessionText && chunk.toLowerCase().startsWith(reconstructedSessionText.toLowerCase())) {
+                    // Android bug: this chunk includes the previous text. Replace instead of append.
+                    reconstructedSessionText = chunk;
+                } else {
+                    // Desktop behavior: chunks are separate words. Append them.
+                    reconstructedSessionText = (reconstructedSessionText + ' ' + chunk).trim();
+                }
+            }
+
+            // 3. Only append the NEW part of the reconstructed text to the input field
+            if (reconstructedSessionText !== this.lastProcessedSessionText) {
+                let newPart = reconstructedSessionText;
+                
+                // If the new text is just an extension of the last processed text, extract the difference
+                if (reconstructedSessionText.toLowerCase().startsWith(this.lastProcessedSessionText.toLowerCase())) {
+                    newPart = reconstructedSessionText.substring(this.lastProcessedSessionText.length).trim();
+                }
+
+                if (newPart) {
+                    const input = document.getElementById('sptsTextInput');
+                    if (input) {
+                        const current = input.value.trim();
+                        input.value = (current + (current.length > 0 ? ' ' : '') + newPart).trim();
+                    }
+
+                    // Reset silence timeout since we got a new final result
+                    if (this.silenceTimeout) clearTimeout(this.silenceTimeout);
+                    this.silenceTimeout = setTimeout(() => {
+                        if (this.isListening) {
+                            this.recognition.stop();
+                            const status = document.getElementById('sptsVoiceStatus');
+                            if (status) status.textContent = '⏹️ Stopped (2s silence)';
+                        }
+                    }, this.SILENCE_DURATION);
+                }
+                this.lastProcessedSessionText = reconstructedSessionText;
             }
 
             if (interimTranscript) {
