@@ -8,7 +8,7 @@ const ASSETS_TO_CACHE = [
   './js/speech-to-sign.js',
   './js/sign-to-speech.js',
   './js/utils.js',
-  './icon-512.png'
+  './icon-512.jpg'
 ];
 
 // Install Event - Cache Core Assets
