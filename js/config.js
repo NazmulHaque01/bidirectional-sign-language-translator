@@ -58,5 +58,10 @@ const CONFIG = {
      * Change this value to switch the default fallback mode.
      * The toggle button in the UI also controls this at runtime.
      */
-    MISSING_AVATAR_MODE: 'text'
+    MISSING_AVATAR_MODE: 'text',
+
+    /* === TOGGLE: TEXT TO SPEECH ===
+     * If true, detected words in the sentence box will be spoken out loud.
+     */
+    TTS_ENABLED: true
 };

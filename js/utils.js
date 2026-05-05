@@ -159,4 +159,25 @@ class Utils {
         const prefix = { 'info': '📘', 'success': '✅', 'error': '❌', 'warning': '⚠️' }[type] || '📌';
         console.log(`${prefix} ${message}`);
     }
+
+    /** Browser-native Text-to-Speech */
+    static speakText(text) {
+        if (!('speechSynthesis' in window)) return;
+        
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        
+        // Try to find a Bengali voice
+        const voices = window.speechSynthesis.getVoices();
+        const bnVoice = voices.find(v => v.lang.startsWith('bn'));
+        if (bnVoice) utterance.voice = bnVoice;
+        else utterance.lang = 'bn-BD';
+
+        utterance.rate = 0.9; // Slightly slower for clarity
+        utterance.pitch = 1.0;
+        
+        window.speechSynthesis.speak(utterance);
+    }
 }

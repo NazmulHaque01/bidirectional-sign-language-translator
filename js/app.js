@@ -96,6 +96,19 @@ const App = {
             });
         }
         /* === END TOGGLE: MISSING AVATAR FALLBACK === */
+
+        /* === TOGGLE: TEXT TO SPEECH === */
+        const ttsToggle = document.getElementById('ttsToggle');
+        if (ttsToggle) {
+            ttsToggle.checked = CONFIG.TTS_ENABLED;
+            ttsToggle.addEventListener('change', (e) => {
+                CONFIG.TTS_ENABLED = e.target.checked;
+                const label = document.getElementById('ttsLabel');
+                if (label) label.textContent = CONFIG.TTS_ENABLED ? 'ON' : 'OFF';
+                Utils.log(`TTS enabled: ${CONFIG.TTS_ENABLED}`, 'info');
+            });
+        }
+        /* === END TOGGLE: TEXT TO SPEECH === */
     },
 
 

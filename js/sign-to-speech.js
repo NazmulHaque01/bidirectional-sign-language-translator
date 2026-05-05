@@ -255,6 +255,11 @@ const SignToSpeech = {
         this.sentenceWords.push(word);
         if (this.sentenceWords.length > 10) this.sentenceWords.shift();
         this.renderSentence();
+
+        // Speak the word if enabled
+        if (CONFIG.TTS_ENABLED) {
+            Utils.speakText(word);
+        }
     },
 
     clearSentence() {
