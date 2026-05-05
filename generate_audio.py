@@ -1,3 +1,4 @@
+import urllib.request
 import json
 import os
 import time
@@ -10,6 +11,16 @@ except ImportError:
 # Setup paths
 LABELS_FILE = 'data/class_labels.json'
 AUDIO_DIR = 'audio'
+SILENCE_FILE = 'silence_500ms.mp3'
+SILENCE_URL = "https://github.com/anars/blank-audio/raw/master/500-milliseconds-of-silence.mp3"
+
+# Download 500ms silence file
+if not os.path.exists(SILENCE_FILE):
+    print("Downloading 500ms silence reference file...")
+    urllib.request.urlretrieve(SILENCE_URL, SILENCE_FILE)
+
+with open(SILENCE_FILE, 'rb') as f:
+    silence_data = f.read()
 
 # Create audio directory if it doesn't exist
 if not os.path.exists(AUDIO_DIR):
@@ -22,6 +33,22 @@ with open(LABELS_FILE, 'r', encoding='utf-8') as f:
 
 total = len(labels)
 print(f"Found {total} labels. Starting audio generation...\n")
+
+def create_padded_audio(text, lang, output_filename):
+    temp_file = f"temp_{lang}.mp3"
+    tts = gTTS(text=text, lang=lang)
+    tts.save(temp_file)
+    
+    with open(temp_file, 'rb') as f:
+        voice_data = f.read()
+        
+    # Binary concatenate: silence + voice + silence
+    with open(output_filename, 'wb') as f:
+        f.write(silence_data)
+        f.write(voice_data)
+        f.write(silence_data)
+        
+    os.remove(temp_file)
 
 for key, value in labels.items():
     # Value format is "Bengali_English", e.g., "অপেক্ষা করো_Wait"
@@ -39,22 +66,16 @@ for key, value in labels.items():
     # 1. Generate Bengali Audio
     if not os.path.exists(bn_filename):
         try:
-            # Adding Bengali 'Danda' (।) to force silence before and after
-            padded_bn = f"। । । {bengali_text} । । ।"
-            tts_bn = gTTS(text=padded_bn, lang='bn')
-            tts_bn.save(bn_filename)
+            create_padded_audio(bengali_text, 'bn', bn_filename)
             print(f"Saved Bengali (padded): {bn_filename}")
-            time.sleep(0.5) # Be polite to the API
+            time.sleep(0.5)
         except Exception as e:
             print(f"Failed to generate Bengali for '{bengali_text}': {e}")
             
     # 2. Generate English Audio
     if not os.path.exists(en_filename):
         try:
-            # Adding dots (.) to force silence before and after
-            padded_en = f". . . {english_text} . . ."
-            tts_en = gTTS(text=padded_en, lang='en')
-            tts_en.save(en_filename)
+            create_padded_audio(english_text, 'en', en_filename)
             print(f"Saved English (padded): {en_filename}")
             time.sleep(0.5)
         except Exception as e:
