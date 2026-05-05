@@ -160,37 +160,23 @@ class Utils {
         console.log(`${prefix} ${message}`);
     }
 
-    /** Browser-native Text-to-Speech */
+    /** Play Pre-recorded Audio files for perfect TTS */
     static speakText(label) {
-        if (!('speechSynthesis' in window)) return;
-        
-        // Cancel any ongoing speech
-        window.speechSynthesis.cancel();
+        if (!label) return;
 
-        // Parse the label: "Bengali_English"
+        // Parse the label: "Bengali_English" (e.g., "অপেক্ষা করো_Wait")
         const parts = label.split('_');
-        let textToSpeak = label;
-        let targetLang = CONFIG.TTS_LANGUAGE; // 'bn' or 'en'
-
-        if (parts.length === 2) {
-            textToSpeak = (targetLang === 'en') ? parts[1] : parts[0];
-        }
-
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        if (parts.length !== 2) return;
         
-        // Try to find a voice matching the target language
-        const voices = window.speechSynthesis.getVoices();
-        const matchingVoice = voices.find(v => v.lang.startsWith(targetLang));
+        const englishText = parts[1];
+        const targetLang = CONFIG.TTS_LANGUAGE; // 'bn' or 'en'
         
-        if (matchingVoice) {
-            utterance.voice = matchingVoice;
-        } else {
-            utterance.lang = (targetLang === 'en') ? 'en-US' : 'bn-BD';
-        }
-
-        utterance.rate = 0.9;
-        utterance.pitch = 1.0;
+        // Construct the path to the MP3 file
+        const audioPath = `./audio/${englishText}_${targetLang}.mp3`;
         
-        window.speechSynthesis.speak(utterance);
+        const audio = new Audio(audioPath);
+        audio.play().catch(e => {
+            console.warn(`[TTS] Failed to play audio: ${audioPath}. Wait for user interaction first.`, e);
+        });
     }
 }
