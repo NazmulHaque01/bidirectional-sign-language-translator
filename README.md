@@ -97,8 +97,6 @@ Simply visit the live demo:
 
 👉 **[https://NazmulHaque01.github.io/bidirectional-sign-language-translator/](https://NazmulHaque01.github.io/bidirectional-sign-language-translator/)**
 
-> Voice input works automatically on GitHub Pages (HTTPS).
-
 ### Option 2 — Run Locally
 
 ```bash
@@ -184,7 +182,7 @@ Then open **http://localhost:8000** in Chrome or Edge.
 
 ## 📜 License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+No LICENSE. Just Use, Find Issues, Help Us Improve The Model.
 
 ---
 
