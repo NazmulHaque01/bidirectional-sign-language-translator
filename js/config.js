@@ -63,5 +63,10 @@ const CONFIG = {
     /* === TOGGLE: TEXT TO SPEECH ===
      * If true, detected words in the sentence box will be spoken out loud.
      */
-    TTS_ENABLED: true
+    TTS_ENABLED: true,
+
+    /* === SETTING: TTS LANGUAGE ===
+     * Options: 'bn' (Bengali) or 'en' (English)
+     */
+    TTS_LANGUAGE: 'bn'
 };

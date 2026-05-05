@@ -109,6 +109,18 @@ const App = {
             });
         }
         /* === END TOGGLE: TEXT TO SPEECH === */
+
+        /* === TOGGLE: TTS LANGUAGE === */
+        const ttsLangToggle = document.getElementById('ttsLangToggle');
+        if (ttsLangToggle) {
+            ttsLangToggle.addEventListener('change', (e) => {
+                CONFIG.TTS_LANGUAGE = e.target.checked ? 'en' : 'bn';
+                const label = document.getElementById('ttsLangLabel');
+                if (label) label.textContent = CONFIG.TTS_LANGUAGE === 'bn' ? 'Bengali' : 'English';
+                Utils.log(`TTS language: ${CONFIG.TTS_LANGUAGE}`, 'info');
+            });
+        }
+        /* === END TOGGLE: TTS LANGUAGE === */
     },
 
 

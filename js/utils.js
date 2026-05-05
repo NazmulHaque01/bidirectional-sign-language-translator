@@ -161,21 +161,34 @@ class Utils {
     }
 
     /** Browser-native Text-to-Speech */
-    static speakText(text) {
+    static speakText(label) {
         if (!('speechSynthesis' in window)) return;
         
         // Cancel any ongoing speech
         window.speechSynthesis.cancel();
 
-        const utterance = new SpeechSynthesisUtterance(text);
-        
-        // Try to find a Bengali voice
-        const voices = window.speechSynthesis.getVoices();
-        const bnVoice = voices.find(v => v.lang.startsWith('bn'));
-        if (bnVoice) utterance.voice = bnVoice;
-        else utterance.lang = 'bn-BD';
+        // Parse the label: "Bengali_English"
+        const parts = label.split('_');
+        let textToSpeak = label;
+        let targetLang = CONFIG.TTS_LANGUAGE; // 'bn' or 'en'
 
-        utterance.rate = 0.9; // Slightly slower for clarity
+        if (parts.length === 2) {
+            textToSpeak = (targetLang === 'en') ? parts[1] : parts[0];
+        }
+
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        
+        // Try to find a voice matching the target language
+        const voices = window.speechSynthesis.getVoices();
+        const matchingVoice = voices.find(v => v.lang.startsWith(targetLang));
+        
+        if (matchingVoice) {
+            utterance.voice = matchingVoice;
+        } else {
+            utterance.lang = (targetLang === 'en') ? 'en-US' : 'bn-BD';
+        }
+
+        utterance.rate = 0.9;
         utterance.pitch = 1.0;
         
         window.speechSynthesis.speak(utterance);
