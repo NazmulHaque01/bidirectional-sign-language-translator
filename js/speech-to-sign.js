@@ -123,6 +123,7 @@ const SpeechToSign = {
     silenceTimeout: null,
     isAnimating: false,
     SILENCE_DURATION: 2000,
+    AVATAR_DISPLAY_TIME: 1000, // Minimum time (in ms) to show each avatar AFTER it loads
     neutralPose: 'NeutralPose.png',
 
     // INITIALIZATION
@@ -220,7 +221,7 @@ const SpeechToSign = {
 
                 // Provide specific, actionable messages for known errors
                 const errorMessages = {
-                    'network': '❌ Network error',
+                    'network': '❌ Network error, Use Chrome Browser, it should fix this',
                     'not-allowed': '❌ Microphone permission denied — Click the lock icon in the address bar to allow',
                     'no-speech': '🔇 No speech detected — Try again',
                     'audio-capture': '❌ No microphone found — Check your audio device',
@@ -368,14 +369,15 @@ const SpeechToSign = {
                 if (info) info.textContent = `${i + 1}/${items.length}: ${item.word}`;
 
                 if (item.avatar) {
-                    // Has avatar — show it
-                    this.showAvatar(CONFIG.AVATAR_DIR + item.avatar, item.word);
+                    // Has avatar — wait for it to load and show it
+                    await this.showAvatar(CONFIG.AVATAR_DIR + item.avatar, item.word);
                 } else {
                     // No avatar — use fallback
-                    this.showFallback(item.word);
+                    await this.showFallback(item.word);
                 }
 
-                await this.sleep(1000);
+                // Wait minimum display time AFTER the image has fully loaded
+                await this.sleep(this.AVATAR_DISPLAY_TIME);
             }
 
             const info = document.getElementById('sptsSignInfo');
@@ -392,47 +394,73 @@ const SpeechToSign = {
     },
 
     showAvatar(src, label) {
-        const display = document.getElementById('sptsSignImage');
-        if (!display) return;
-        display.innerHTML = '';
-        const img = new Image();
-        img.className = 'avatar-img';
-        img.alt = label;
-        img.onload = () => { display.innerHTML = ''; display.appendChild(img); };
-        img.onerror = () => { this.showFallback(label); };
-        img.src = src;
+        return new Promise((resolve) => {
+            const display = document.getElementById('sptsSignImage');
+            if (!display) {
+                resolve();
+                return;
+            }
+            
+            const img = new Image();
+            img.className = 'avatar-img';
+            img.alt = label;
+            img.onload = () => { 
+                display.innerHTML = ''; 
+                display.appendChild(img); 
+                resolve();
+            };
+            img.onerror = () => { 
+                this.showFallback(label).then(resolve); 
+            };
+            img.src = src;
+        });
     },
 
     /* === TOGGLE: MISSING AVATAR FALLBACK === */
     showFallback(word) {
-        const display = document.getElementById('sptsSignImage');
-        if (!display) return;
-        display.innerHTML = '';
+        return new Promise((resolve) => {
+            const display = document.getElementById('sptsSignImage');
+            if (!display) {
+                resolve();
+                return;
+            }
+            display.innerHTML = '';
 
-        if (CONFIG.MISSING_AVATAR_MODE === 'text') {
-            // Mode A: Show word in big font
-            const div = document.createElement('div');
-            div.className = 'fallback-text';
-            div.textContent = word;
-            display.appendChild(div);
-        } else {
-            // Mode B: Show neutral pose
-            const img = new Image();
-            img.className = 'avatar-img';
-            img.alt = word;
-            img.src = CONFIG.AVATAR_DIR + this.neutralPose;
-            const label = document.createElement('div');
-            label.className = 'fallback-label';
-            label.textContent = word;
-            display.appendChild(img);
-            display.appendChild(label);
-        }
+            if (CONFIG.MISSING_AVATAR_MODE === 'text') {
+                // Mode A: Show word in big font
+                const div = document.createElement('div');
+                div.className = 'fallback-text';
+                div.textContent = word;
+                display.appendChild(div);
+                resolve();
+            } else {
+                // Mode B: Show neutral pose
+                const img = new Image();
+                img.className = 'avatar-img';
+                img.alt = word;
+                img.onload = () => resolve();
+                img.onerror = () => resolve();
+                img.src = CONFIG.AVATAR_DIR + this.neutralPose;
+                const label = document.createElement('div');
+                label.className = 'fallback-label';
+                label.textContent = word;
+                display.appendChild(img);
+                display.appendChild(label);
+            }
+        });
     },
     /* === END TOGGLE: MISSING AVATAR FALLBACK === */
 
     showAvatarPlaceholder() {
         const display = document.getElementById('sptsSignImage');
-        if (display) display.innerHTML = '<p class="avatar-placeholder">Sign gestures will appear here</p>';
+        if (display) {
+            display.innerHTML = '';
+            const img = new Image();
+            img.className = 'avatar-img';
+            img.alt = 'Waiting for input...';
+            img.src = CONFIG.AVATAR_DIR + this.neutralPose;
+            display.appendChild(img);
+        }
     },
 
     // HELPERS
