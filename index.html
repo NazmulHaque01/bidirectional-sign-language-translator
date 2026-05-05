@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bidirectional Bangla Sign Language Translator — Real-time gesture recognition and speech-to-sign translation">
+    <title>🤟 Bangla Sign Language Translator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🤟 Bangla Sign Language Translator</h1>
+            <p class="subtitle">Bidirectional — Sign to Speech &amp; Speech to Sign</p>
+        </header>
+
+        <!-- Status Bar -->
+        <div class="status loading" id="status">
+            <span id="statusText">Loading...</span>
+            <span id="statusIcon">⏳</span>
+        </div>
+
+        <!-- Mobile Tab Bar (hidden on desktop) -->
+        <div class="mobile-tabs">
+            <div class="mobile-tabs-inner">
+                <button class="mobile-tab active" data-panel="sign-to-speech">🖐️ Sign → Speech</button>
+                <button class="mobile-tab" data-panel="speech-to-sign">🗣️ Speech → Sign</button>
+            </div>
+        </div>
+
+        <!-- Panel Container -->
+        <div class="panel-wrapper">
+            <div class="panel-container" id="panelContainer">
+
+                <!-- ============================================================ -->
+                <!-- PANEL 1: Sign → Speech (Camera Gesture Recognition)          -->
+                <!-- ============================================================ -->
+                <div class="panel" id="signToSpeechPanel">
+                    <div class="panel-title">🖐️ Sign → Speech</div>
+
+                    <!-- Camera -->
+                    <div class="video-container" id="stsVideoContainer">
+                        <video id="stsVideo" autoplay playsinline></video>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="controls">
+                        <button class="btn btn-primary" id="stsStartBtn">📷 Start Camera</button>
+                        <button class="btn btn-danger" id="stsStopBtn" disabled>⛔ Stop</button>
+                    </div>
+
+                    <!-- Prediction -->
+                    <div class="result-box">
+                        <h3>Current Prediction</h3>
+                        <div class="gesture-name no-hand" id="stsGestureName">✋ Show your hand</div>
+                        <div class="confidence-bar"><div class="confidence-fill" id="stsConfidenceFill"></div></div>
+                        <div class="confidence-text" id="stsConfidenceText">Confidence: --</div>
+                    </div>
+
+                    <!-- Sentence -->
+                    <div class="sentence-section">
+                        <h4>📝 Detected Sentence</h4>
+                        <div class="sentence-box" id="stsSentenceBox">
+                            <div class="sentence-placeholder">Detected words will appear here...</div>
+                        </div>
+                        <div style="margin-top:8px; text-align:right;">
+                            <button class="btn btn-clear" id="stsClearBtn">🗑️ Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================ -->
+                <!-- PANEL 2: Speech → Sign (Voice/Text → Avatar)                 -->
+                <!-- ============================================================ -->
+                <div class="panel" id="speechToSignPanel">
+                    <div class="panel-title">🗣️ Speech → Sign</div>
+
+                    <!-- Text Input -->
+                    <textarea
+                        id="sptsTextInput"
+                        class="spts-textarea"
+                        placeholder="Enter Bengali text or use voice input..."
+                        rows="3"
+                    ></textarea>
+
+                    <!-- Voice Status -->
+                    <div id="sptsVoiceStatus" class="voice-status"></div>
+
+                    <!-- Buttons -->
+                    <div class="btn-row">
+                        <button class="btn btn-primary btn-voice" id="sptsVoiceBtn">🎤 Voice Input</button>
+                        <button class="btn btn-success" id="sptsTranslateBtn">▶️ Translate</button>
+                        <button class="btn btn-clear" id="sptsClearBtn">🗑️ Clear</button>
+                    </div>
+
+                    <!-- Avatar Display -->
+                    <div class="avatar-display" id="sptsSignImage">
+                        <p class="avatar-placeholder">Sign gestures will appear here</p>
+                    </div>
+
+                    <!-- Sign Info -->
+                    <div class="sign-info" id="sptsSignInfo">Ready</div>
+
+                    <!-- Error -->
+                    <div id="sptsError" class="error-message"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Settings Bar -->
+        <div class="settings-bar">
+            <!-- === TOGGLE: CAMERA ASPECT RATIO === -->
+            <div class="toggle-group">
+                <span class="toggle-label">📐 Camera:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="cameraRatioToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-value" id="cameraRatioLabel">Landscape</span>
+            </div>
+            <!-- === END TOGGLE: CAMERA ASPECT RATIO === -->
+
+            <!-- === TOGGLE: MISSING AVATAR FALLBACK === -->
+            <div class="toggle-group">
+                <span class="toggle-label">🖼️ Missing Avatar:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="fallbackModeToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-value" id="fallbackModeLabel">Show Text</span>
+            </div>
+            <!-- === END TOGGLE: MISSING AVATAR FALLBACK === -->
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with MediaPipe Hand &amp; Pose Landmarker + Pure JS Inference</p>
+            <p>Model Accuracy: 92% | 60 Gesture Classes | 51 Avatars</p>
+        </footer>
+    </div>
+
+    <!-- MediaPipe ES Module -->
+    <script type="module">
+        import { HandLandmarker, PoseLandmarker, FilesetResolver } from
+            "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs";
+        window.HandLandmarker = HandLandmarker;
+        window.PoseLandmarker = PoseLandmarker;
+        window.FilesetResolver = FilesetResolver;
+        window.dispatchEvent(new Event('mediapipe-ready'));
+    </script>
+
+    <!-- App scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/sign-to-speech.js"></script>
+    <script src="js/speech-to-sign.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
