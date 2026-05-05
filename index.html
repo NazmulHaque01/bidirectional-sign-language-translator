@@ -111,52 +111,70 @@
             </div>
         </div>
 
-        <!-- Settings Bar -->
-        <div class="settings-bar">
-            <!-- === TOGGLE: CAMERA ASPECT RATIO === -->
-            <div class="toggle-group">
-                <span class="toggle-label">📐 Camera:</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="cameraRatioToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-                <span class="toggle-value" id="cameraRatioLabel">Landscape</span>
+        <!-- Settings Modal -->
+        <div class="settings-modal" id="settingsModal">
+            <h2>⚙️ App Settings</h2>
+            
+            <!-- Camera Aspect Ratio -->
+            <div class="settings-row">
+                <div class="settings-label">📐 Camera View</div>
+                <div class="settings-control">
+                    <span class="toggle-option left active" id="cameraRatioLabelLeft">Landscape</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="cameraRatioToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-option right" id="cameraRatioLabelRight">Portrait</span>
+                </div>
             </div>
-            <!-- === END TOGGLE: CAMERA ASPECT RATIO === -->
 
-            <!-- === TOGGLE: MISSING AVATAR FALLBACK === -->
-            <div class="toggle-group">
-                <span class="toggle-label">🖼️ Missing Avatar:</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="fallbackModeToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-                <span class="toggle-value" id="fallbackModeLabel">Show Text</span>
+            <!-- Missing Avatar Fallback -->
+            <div class="settings-row">
+                <div class="settings-label">
+                    🖼️ Missing Avatar
+                    <span class="info-icon">?
+                        <span class="info-tooltip">Choose what to show when there's no sign animation for a word: either the word as text, or the neutral pose.</span>
+                    </span>
+                </div>
+                <div class="settings-control">
+                    <span class="toggle-option left active" id="fallbackModeLabelLeft">Show Text</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="fallbackModeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-option right" id="fallbackModeLabelRight">Neutral Pose</span>
+                </div>
             </div>
-            <!-- === END TOGGLE: MISSING AVATAR FALLBACK === -->
 
-            <!-- === TOGGLE: TEXT TO SPEECH === -->
-            <div class="toggle-group">
-                <span class="toggle-label">🗣️ Voice Output:</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="ttsToggle" checked>
-                    <span class="toggle-slider"></span>
-                </label>
-                <span class="toggle-value" id="ttsLabel">ON</span>
+            <!-- Text to Speech -->
+            <div class="settings-row">
+                <div class="settings-label">🗣️ Voice Output</div>
+                <div class="settings-control">
+                    <span class="toggle-option left" id="ttsLabelLeft">OFF</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="ttsToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-option right active" id="ttsLabelRight">ON</span>
+                </div>
             </div>
-            <!-- === END TOGGLE: TEXT TO SPEECH === -->
 
-            <!-- === TOGGLE: TTS LANGUAGE === -->
-            <div class="toggle-group">
-                <span class="toggle-label">🌐 Voice Language:</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="ttsLangToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-                <span class="toggle-value" id="ttsLangLabel">Bengali</span>
+            <!-- TTS Language -->
+            <div class="settings-row">
+                <div class="settings-label">🌐 Voice Language</div>
+                <div class="settings-control">
+                    <span class="toggle-option left active" id="ttsLangLabelLeft">Bengali</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="ttsLangToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-option right" id="ttsLangLabelRight">English</span>
+                </div>
             </div>
-            <!-- === END TOGGLE: TTS LANGUAGE === -->
         </div>
+
+        <!-- Floating Settings Button -->
+        <button class="floating-settings-btn" id="settingsBtn" title="Open Settings">⚙️</button>
 
         <!-- Footer -->
         <footer class="footer">

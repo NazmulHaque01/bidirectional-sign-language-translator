@@ -9,6 +9,11 @@ const App = {
     // INITIALIZATION
     async init() {
         Utils.log('App initializing...', 'info');
+        
+        // Setup UI listeners immediately so buttons work even while loading
+        this.setupEventListeners();
+        this.setupMobileToggle();
+        
         this.updateStatus('Loading...', 'loading');
 
         try {
@@ -22,8 +27,6 @@ const App = {
                 SpeechToSign.init()
             ]);
 
-            this.setupEventListeners();
-            this.setupMobileToggle();
             this.updateStatus('Ready! Both translators loaded.', 'ready');
             Utils.log('App fully initialized', 'success');
         } catch (error) {
@@ -51,6 +54,36 @@ const App = {
     // EVENT LISTENERS
 
     setupEventListeners() {
+        // Settings Modal Toggle
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        if (settingsBtn && settingsModal) {
+            settingsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                settingsModal.classList.toggle('show');
+            });
+            
+            // Close when clicking outside
+            document.addEventListener('click', (e) => {
+                if (settingsModal.classList.contains('show') && !settingsModal.contains(e.target) && e.target !== settingsBtn) {
+                    settingsModal.classList.remove('show');
+                }
+            });
+            
+            // Prevent clicks inside modal from closing it
+            settingsModal.addEventListener('click', (e) => e.stopPropagation());
+        }
+
+        // Info Icon Toggle (for Missing Avatar description)
+        const infoIcon = document.querySelector('.info-icon');
+        const infoTooltip = document.querySelector('.info-tooltip');
+        if (infoIcon && infoTooltip) {
+            infoIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                infoTooltip.classList.toggle('show');
+            });
+        }
+
         // Sign→Speech controls
         document.getElementById('stsStartBtn').addEventListener('click', () => SignToSpeech.startCamera());
         document.getElementById('stsStopBtn').addEventListener('click', () => SignToSpeech.stopCamera());
@@ -66,8 +99,10 @@ const App = {
         if (ratioToggle) {
             ratioToggle.addEventListener('change', (e) => {
                 CONFIG.CAMERA_ASPECT_RATIO = e.target.checked ? 'portrait' : 'landscape';
-                const label = document.getElementById('cameraRatioLabel');
-                if (label) label.textContent = CONFIG.CAMERA_ASPECT_RATIO === 'portrait' ? 'Portrait' : 'Landscape';
+                
+                // Highlight active label
+                document.getElementById('cameraRatioLabelLeft')?.classList.toggle('active', !e.target.checked);
+                document.getElementById('cameraRatioLabelRight')?.classList.toggle('active', e.target.checked);
 
                 // Update video container aspect ratio via CSS class
                 const container = document.getElementById('stsVideoContainer');
@@ -90,8 +125,11 @@ const App = {
         if (fallbackToggle) {
             fallbackToggle.addEventListener('change', (e) => {
                 CONFIG.MISSING_AVATAR_MODE = e.target.checked ? 'neutral' : 'text';
-                const label = document.getElementById('fallbackModeLabel');
-                if (label) label.textContent = CONFIG.MISSING_AVATAR_MODE === 'text' ? 'Show Text' : 'Neutral Pose';
+                
+                // Highlight active label
+                document.getElementById('fallbackModeLabelLeft')?.classList.toggle('active', !e.target.checked);
+                document.getElementById('fallbackModeLabelRight')?.classList.toggle('active', e.target.checked);
+                
                 Utils.log(`Fallback mode: ${CONFIG.MISSING_AVATAR_MODE}`, 'info');
             });
         }
@@ -103,8 +141,11 @@ const App = {
             ttsToggle.checked = CONFIG.TTS_ENABLED;
             ttsToggle.addEventListener('change', (e) => {
                 CONFIG.TTS_ENABLED = e.target.checked;
-                const label = document.getElementById('ttsLabel');
-                if (label) label.textContent = CONFIG.TTS_ENABLED ? 'ON' : 'OFF';
+                
+                // Highlight active label
+                document.getElementById('ttsLabelLeft')?.classList.toggle('active', !e.target.checked);
+                document.getElementById('ttsLabelRight')?.classList.toggle('active', e.target.checked);
+                
                 Utils.log(`TTS enabled: ${CONFIG.TTS_ENABLED}`, 'info');
             });
         }
@@ -115,8 +156,14 @@ const App = {
         if (ttsLangToggle) {
             ttsLangToggle.addEventListener('change', (e) => {
                 CONFIG.TTS_LANGUAGE = e.target.checked ? 'en' : 'bn';
-                const label = document.getElementById('ttsLangLabel');
-                if (label) label.textContent = CONFIG.TTS_LANGUAGE === 'bn' ? 'Bengali' : 'English';
+                
+                // Highlight active label
+                document.getElementById('ttsLangLabelLeft')?.classList.toggle('active', !e.target.checked);
+                document.getElementById('ttsLangLabelRight')?.classList.toggle('active', e.target.checked);
+                
+                // Re-render sentence box to update word languages
+                SignToSpeech.renderSentence();
+                
                 Utils.log(`TTS language: ${CONFIG.TTS_LANGUAGE}`, 'info');
             });
         }

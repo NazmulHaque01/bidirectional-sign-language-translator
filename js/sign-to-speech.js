@@ -155,6 +155,11 @@ const SignToSpeech = {
         this.isRunning = false;
         document.getElementById('stsStartBtn').disabled = false;
         document.getElementById('stsStopBtn').disabled = true;
+
+        // Reset UI status
+        this.showNoHandState();
+        App.updateStatus('Ready! Camera stopped.', 'ready');
+
         Utils.log('[Sign→Speech] Camera stopped', 'info');
     },
 
@@ -307,7 +312,14 @@ const SignToSpeech = {
         this.sentenceWords.forEach((word, i) => {
             const span = document.createElement('span');
             span.className = 'sentence-word';
-            span.textContent = word;
+
+            // Language filtering: if word is "BN_EN", pick based on toggle
+            let displayWord = word;
+            if (word.includes('_')) {
+                const parts = word.split('_');
+                displayWord = CONFIG.TTS_LANGUAGE === 'bn' ? parts[0] : parts[1];
+            }
+            span.textContent = displayWord;
             if (i === this.sentenceWords.length - 1) {
                 span.style.animation = 'wordPop 0.4s cubic-bezier(0.175,0.885,0.32,1.275)';
             } else {
