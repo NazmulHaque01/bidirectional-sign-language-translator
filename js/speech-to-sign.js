@@ -149,6 +149,10 @@ const SpeechToSign = {
 
         // Setup speech recognition
         this.setupSpeechRecognition();
+
+        // Show default neutral pose
+        this.showAvatarPlaceholder();
+
         Utils.log('[Speech→Sign] Ready', 'success');
     },
 
