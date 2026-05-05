@@ -39,9 +39,11 @@ for key, value in labels.items():
     # 1. Generate Bengali Audio
     if not os.path.exists(bn_filename):
         try:
-            tts_bn = gTTS(text=bengali_text, lang='bn')
+            # Adding Bengali 'Danda' (।) to force silence before and after
+            padded_bn = f"। । । {bengali_text} । । ।"
+            tts_bn = gTTS(text=padded_bn, lang='bn')
             tts_bn.save(bn_filename)
-            print(f"Saved Bengali: {bn_filename}")
+            print(f"Saved Bengali (padded): {bn_filename}")
             time.sleep(0.5) # Be polite to the API
         except Exception as e:
             print(f"Failed to generate Bengali for '{bengali_text}': {e}")
@@ -49,9 +51,11 @@ for key, value in labels.items():
     # 2. Generate English Audio
     if not os.path.exists(en_filename):
         try:
-            tts_en = gTTS(text=english_text, lang='en')
+            # Adding dots (.) to force silence before and after
+            padded_en = f". . . {english_text} . . ."
+            tts_en = gTTS(text=padded_en, lang='en')
             tts_en.save(en_filename)
-            print(f"Saved English: {en_filename}")
+            print(f"Saved English (padded): {en_filename}")
             time.sleep(0.5)
         except Exception as e:
             print(f"Failed to generate English for '{english_text}': {e}")
