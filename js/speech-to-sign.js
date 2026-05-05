@@ -177,7 +177,11 @@ const SpeechToSign = {
 
         this.recognition.onstart = () => {
             this.isListening = true;
-            this.lastProcessedSessionText = ''; // Reset for new session
+            
+            // Capture the existing text in the input box when the session starts
+            const input = document.getElementById('sptsTextInput');
+            this.baseText = input ? input.value.trim() : '';
+            
             const btn = document.getElementById('sptsVoiceBtn');
             if (btn) { btn.classList.add('recording'); btn.textContent = '🎤 Listening...'; }
             const status = document.getElementById('sptsVoiceStatus');
@@ -201,46 +205,40 @@ const SpeechToSign = {
                 }
             }
 
-            // 2. Reconstruct the clean session text, handling Android Chrome's cumulative bug
+            // 2. Reconstruct the clean session text
             let reconstructedSessionText = '';
             for (let chunk of sessionFinals) {
+                // If the new chunk starts with our accumulated text, it's the Android cumulative bug.
+                // Or if it's identical, it's Android repeating the same final.
                 if (reconstructedSessionText && chunk.toLowerCase().startsWith(reconstructedSessionText.toLowerCase())) {
-                    // Android bug: this chunk includes the previous text. Replace instead of append.
                     reconstructedSessionText = chunk;
                 } else {
-                    // Desktop behavior: chunks are separate words. Append them.
                     reconstructedSessionText = (reconstructedSessionText + ' ' + chunk).trim();
                 }
             }
 
-            // 3. Only append the NEW part of the reconstructed text to the input field
-            if (reconstructedSessionText !== this.lastProcessedSessionText) {
-                let newPart = reconstructedSessionText;
-                
-                // If the new text is just an extension of the last processed text, extract the difference
-                if (reconstructedSessionText.toLowerCase().startsWith(this.lastProcessedSessionText.toLowerCase())) {
-                    newPart = reconstructedSessionText.substring(this.lastProcessedSessionText.length).trim();
-                }
-
-                if (newPart) {
-                    const input = document.getElementById('sptsTextInput');
-                    if (input) {
-                        const current = input.value.trim();
-                        input.value = (current + (current.length > 0 ? ' ' : '') + newPart).trim();
-                    }
-
-                    // Reset silence timeout since we got a new final result
-                    if (this.silenceTimeout) clearTimeout(this.silenceTimeout);
-                    this.silenceTimeout = setTimeout(() => {
-                        if (this.isListening) {
-                            this.recognition.stop();
-                            const status = document.getElementById('sptsVoiceStatus');
-                            if (status) status.textContent = '⏹️ Stopped (2s silence)';
-                        }
-                    }, this.SILENCE_DURATION);
-                }
-                this.lastProcessedSessionText = reconstructedSessionText;
+            // 3. Instead of appending, we completely overwrite the input with baseText + new session text
+            const input = document.getElementById('sptsTextInput');
+            if (input) {
+                const finalStr = (this.baseText + (this.baseText && reconstructedSessionText ? ' ' : '') + reconstructedSessionText).trim();
+                input.value = finalStr;
             }
+
+            // 4. Reset silence timeout
+            if (this.silenceTimeout) clearTimeout(this.silenceTimeout);
+            this.silenceTimeout = setTimeout(() => {
+                if (this.isListening) {
+                    this.isListening = false;
+                    
+                    // Force UI update directly here for mobile
+                    const status = document.getElementById('sptsVoiceStatus');
+                    if (status) status.textContent = '⏹️ Stopped (2s silence)';
+                    const btn = document.getElementById('sptsVoiceBtn');
+                    if (btn) { btn.classList.remove('recording'); btn.textContent = '🎤 Voice Input'; }
+                    
+                    try { this.recognition.stop(); } catch(e) {}
+                }
+            }, 2000); // 2 second silence timeout
 
             if (interimTranscript) {
                 const status = document.getElementById('sptsVoiceStatus');
