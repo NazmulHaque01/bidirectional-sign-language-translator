@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sign-translator-v3';
+const CACHE_NAME = 'sign-translator-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -39,11 +39,21 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch Event - Serve from Cache, Fallback to Network
+// Fetch Event - Network First, Fallback to Cache
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        // Cache the new response for future offline use
+        const responseClone = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseClone);
+        });
+        return networkResponse;
+      })
+      .catch(() => {
+        // If network fails (offline), fallback to cache
+        return caches.match(event.request);
+      })
   );
 });
