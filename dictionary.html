@@ -1,473 +1,297 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bangla Sign Language Dictionary</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Sign Language Dictionary</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background: #f7fafc; color: #2d3748; padding: 40px 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 40px; }
-        .header h1 { font-size: 2.5em; color: #667eea; margin-bottom: 10px; }
-        .header p { color: #718096; font-size: 1.1em; }
-        .nav-link { display: inline-block; margin-bottom: 30px; color: #667eea; text-decoration: none; font-weight: 600; }
-        .nav-link:hover { text-decoration: underline; }
-        
-        .section-title { font-size: 1.8em; margin-top: 50px; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .card img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; background: #edf2f7; }
-        .card h3 { font-size: 1.2em; color: #2d3748; margin-bottom: 5px; }
-        .card p { color: #718096; font-size: 0.9em; }
-        .no-image { height: 150px; display: flex; align-items: center; justify-content: center; background: #edf2f7; border-radius: 8px; margin-bottom: 15px; color: #a0aec0; }
-        
-        .words-list { display: flex; flex-wrap: wrap; gap: 10px; }
-        .word-badge { background: #ebf4ff; color: #3182ce; padding: 8px 16px; border-radius: 20px; font-weight: 500; font-size: 0.95em; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; text-align: center; }
+        .container { max-width: 1200px; margin: auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; border-radius: 8px; }
+        .card p { margin: 10px 0 0; font-weight: bold; color: #2d3748; }
+        h1 { color: #1a202c; }
+        .back-btn { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #4a90e2; color: white; text-decoration: none; border-radius: 8px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="nav-link">← Back to Translator</a>
-        
-        <div class="header">
-            <h1>Bangla Sign Language Dictionary</h1>
-            <p>Explore the supported gestures and vocabulary for the translation models</p>
-        </div>
-
-        <h2 class="section-title">Sign to Speech (Camera Gestures)</h2>
-        <p style="margin-bottom: 20px; color: #718096;">The following 60 signs can be recognized by the camera.</p>
+        <a href="index.html" class="back-btn">← Back to App</a>
+        <h1>Supported Signs (Speech-to-Sign)</h1>
+        <p>Total: 54 signs supported with 3D avatars</p>
         <div class="grid">
 
             <div class="card">
-                <div class="no-image">No Image Yet</div>
-                <h3>অপেক্ষা করো</h3>
-                <p>Wait</p>
+                <img src="avatars/অপেক্ষা করো_Wait.webp" alt="অপেক্ষা করো">
+                <p>অপেক্ষা করো</p>
             </div>
 
             <div class="card">
                 <img src="avatars/অফিস_Office.webp" alt="অফিস">
-                <h3>অফিস</h3>
-                <p>Office</p>
+                <p>অফিস</p>
             </div>
 
             <div class="card">
                 <img src="avatars/আইন_Law.webp" alt="আইন">
-                <h3>আইন</h3>
-                <p>Law</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/আঙুল_Finger.webp" alt="আঙুল">
-                <h3>আঙুল</h3>
-                <p>Finger</p>
+                <p>আইন</p>
             </div>
 
             <div class="card">
                 <img src="avatars/আজ_Today.webp" alt="আজ">
-                <h3>আজ</h3>
-                <p>Today</p>
+                <p>আজ</p>
             </div>
 
             <div class="card">
                 <img src="avatars/আট_Eight.webp" alt="আট">
-                <h3>আট</h3>
-                <p>Eight</p>
+                <p>আট</p>
             </div>
 
             <div class="card">
-                <img src="avatars/আদা_Ginger.webp" alt="আদা">
-                <h3>আদা</h3>
-                <p>Ginger</p>
+                <img src="avatars/তোমার(আপনার)_Your.webp" alt="আপনার">
+                <p>আপনার</p>
+            </div>
+
+            <div class="card">
+                <img src="avatars/তুমি(আপনি)_You.webp" alt="আপনি">
+                <p>আপনি</p>
             </div>
 
             <div class="card">
                 <img src="avatars/আমার_My.webp" alt="আমার">
-                <h3>আমার</h3>
-                <p>My</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/আমি_I (Me).webp" alt="আমি">
-                <h3>আমি</h3>
-                <p>I (Me)</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/আয়না_Mirror.webp" alt="আয়না">
-                <h3>আয়না</h3>
-                <p>Mirror</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/ইনস্টাগ্রাম_Instagram.webp" alt="ইনস্টাগ্রাম">
-                <h3>ইনস্টাগ্রাম</h3>
-                <p>Instagram</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/এক_One.webp" alt="এক">
-                <h3>এক</h3>
-                <p>One</p>
+                <p>আমার</p>
             </div>
 
             <div class="card">
                 <img src="avatars/এখন_Now.webp" alt="এখন">
-                <h3>এখন</h3>
-                <p>Now</p>
+                <p>এখন</p>
             </div>
 
             <div class="card">
                 <img src="avatars/এটি_This.webp" alt="এটি">
-                <h3>এটি</h3>
-                <p>This</p>
+                <p>এটি</p>
             </div>
 
             <div class="card">
-                <img src="avatars/ওটা(সেটা)_That.webp" alt="ওটা(সেটা)">
-                <h3>ওটা(সেটা)</h3>
-                <p>That</p>
+                <img src="avatars/ওটা(সেটা)_That.webp" alt="ওটা">
+                <p>ওটা</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ওয়াই-ফাই_Wi-Fi.webp" alt="ওয়াই-ফাই">
-                <h3>ওয়াই-ফাই</h3>
-                <p>Wi-Fi</p>
+                <p>ওয়াই-ফাই</p>
             </div>
 
             <div class="card">
                 <img src="avatars/কখন_When.webp" alt="কখন">
-                <h3>কখন</h3>
-                <p>When</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/কর্মচারী_Employee.webp" alt="কর্মচারী">
-                <h3>কর্মচারী</h3>
-                <p>Employee</p>
+                <p>কখন</p>
             </div>
 
             <div class="card">
                 <img src="avatars/কাঁধ_Shoulder.webp" alt="কাঁধ">
-                <h3>কাঁধ</h3>
-                <p>Shoulder</p>
+                <p>কাঁধ</p>
             </div>
 
             <div class="card">
                 <img src="avatars/কাজ_Work.webp" alt="কাজ">
-                <h3>কাজ</h3>
-                <p>Work</p>
+                <p>কাজ</p>
             </div>
 
             <div class="card">
                 <img src="avatars/কাঠ_Wood.webp" alt="কাঠ">
-                <h3>কাঠ</h3>
-                <p>Wood</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/কান_Ear.webp" alt="কান">
-                <h3>কান</h3>
-                <p>Ear</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/কী_What.webp" alt="কী">
-                <h3>কী</h3>
-                <p>What</p>
+                <p>কাঠ</p>
             </div>
 
             <div class="card">
                 <img src="avatars/কে_Who.webp" alt="কে">
-                <h3>কে</h3>
-                <p>Who</p>
+                <p>কে</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ক্লান্ত_Tired.webp" alt="ক্লান্ত">
-                <h3>ক্লান্ত</h3>
-                <p>Tired</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/ক্ষুধার্ত_Hungry.webp" alt="ক্ষুধার্ত">
-                <h3>ক্ষুধার্ত</h3>
-                <p>Hungry</p>
+                <p>ক্লান্ত</p>
             </div>
 
             <div class="card">
                 <img src="avatars/খাওয়া_Eating.webp" alt="খাওয়া">
-                <h3>খাওয়া</h3>
-                <p>Eating</p>
+                <p>খাওয়া</p>
             </div>
 
             <div class="card">
                 <img src="avatars/খারাপ_Bad.webp" alt="খারাপ">
-                <h3>খারাপ</h3>
-                <p>Bad</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/গণিত_Mathematics.webp" alt="গণিত">
-                <h3>গণিত</h3>
-                <p>Mathematics</p>
+                <p>খারাপ</p>
             </div>
 
             <div class="card">
                 <img src="avatars/গরু_Cow.webp" alt="গরু">
-                <h3>গরু</h3>
-                <p>Cow</p>
+                <p>গরু</p>
             </div>
 
             <div class="card">
                 <img src="avatars/গলা_Neck.webp" alt="গলা">
-                <h3>গলা</h3>
-                <p>Neck</p>
+                <p>গলা</p>
             </div>
 
             <div class="card">
                 <img src="avatars/গুণ_Multiplication.webp" alt="গুণ">
-                <h3>গুণ</h3>
-                <p>Multiplication</p>
+                <p>গুণ</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ঘড়ি_Clock.webp" alt="ঘড়ি">
-                <h3>ঘড়ি</h3>
-                <p>Clock</p>
+                <p>ঘড়ি</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ঘুমানো_Sleeping.webp" alt="ঘুমানো">
-                <h3>ঘুমানো</h3>
-                <p>Sleeping</p>
+                <p>ঘুমানো</p>
             </div>
 
             <div class="card">
                 <img src="avatars/চট্টগ্রাম_Chittagong.webp" alt="চট্টগ্রাম">
-                <h3>চট্টগ্রাম</h3>
-                <p>Chittagong</p>
+                <p>চট্টগ্রাম</p>
             </div>
 
             <div class="card">
-                <img src="avatars/চাচা(মামা)_Uncle.webp" alt="চাচা(মামা)">
-                <h3>চাচা(মামা)</h3>
-                <p>Uncle</p>
+                <img src="avatars/চাচা(মামা)_Uncle.webp" alt="চাচা">
+                <p>চাচা</p>
             </div>
 
             <div class="card">
-                <img src="avatars/চামড়া_Skin.webp" alt="চামড়া">
-                <h3>চামড়া</h3>
-                <p>Skin</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/কর্মচারী_Employee.webp" alt="চার">
-                <h3>চার</h3>
-                <p>Four</p>
+                <img src="avatars/চার_Four.webp" alt="চার">
+                <p>চার</p>
             </div>
 
             <div class="card">
                 <img src="avatars/চুপ করো_Shut up.webp" alt="চুপ করো">
-                <h3>চুপ করো</h3>
-                <p>Shut up</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/চুল_Hair.webp" alt="চুল">
-                <h3>চুল</h3>
-                <p>Hair</p>
+                <p>চুপ করো</p>
             </div>
 
             <div class="card">
                 <img src="avatars/চোখ_Eye.webp" alt="চোখ">
-                <h3>চোখ</h3>
-                <p>Eye</p>
+                <p>চোখ</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ছয়_Six.webp" alt="ছয়">
-                <h3>ছয়</h3>
-                <p>Six</p>
+                <p>ছয়</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ছোট_Small.webp" alt="ছোট">
-                <h3>ছোট</h3>
-                <p>Small</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/জিহ্বা_Tongue.webp" alt="জিহ্বা">
-                <h3>জিহ্বা</h3>
-                <p>Tongue</p>
+                <p>ছোট</p>
             </div>
 
             <div class="card">
                 <img src="avatars/জুতো_Shoe.webp" alt="জুতো">
-                <h3>জুতো</h3>
-                <p>Shoe</p>
+                <p>জুতো</p>
             </div>
 
             <div class="card">
                 <img src="avatars/জেল_Prison.webp" alt="জেল">
-                <h3>জেল</h3>
-                <p>Prison</p>
+                <p>জেল</p>
             </div>
 
             <div class="card">
                 <img src="avatars/জ্বর_Fever.webp" alt="জ্বর">
-                <h3>জ্বর</h3>
-                <p>Fever</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/টয়লেট_Toilet.webp" alt="টয়লেট">
-                <h3>টয়লেট</h3>
-                <p>Toilet</p>
+                <p>জ্বর</p>
             </div>
 
             <div class="card">
                 <img src="avatars/টুপি_Cap.webp" alt="টুপি">
-                <h3>টুপি</h3>
-                <p>Cap</p>
+                <p>টুপি</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ঠান্ডা_Cold.webp" alt="ঠান্ডা">
-                <h3>ঠান্ডা</h3>
-                <p>Cold</p>
+                <p>ঠান্ডা</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ডাক্তার_Doctor.webp" alt="ডাক্তার">
-                <h3>ডাক্তার</h3>
-                <p>Doctor</p>
+                <p>ডাক্তার</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ডান_Right.webp" alt="ডান">
-                <h3>ডান</h3>
-                <p>Right</p>
+                <p>ডান</p>
             </div>
 
             <div class="card">
                 <img src="avatars/ডিম_Egg.webp" alt="ডিম">
-                <h3>ডিম</h3>
-                <p>Egg</p>
+                <p>ডিম</p>
             </div>
 
             <div class="card">
-                <img src="avatars/ডাক্তার_Doctor.webp" alt="তার">
-                <h3>তার</h3>
-                <p>His</p>
+                <img src="avatars/তার_His.webp" alt="তার">
+                <p>তার</p>
             </div>
 
             <div class="card">
                 <img src="avatars/তিন_Three.webp" alt="তিন">
-                <h3>তিন</h3>
-                <p>Three</p>
+                <p>তিন</p>
             </div>
 
             <div class="card">
-                <img src="avatars/তুমি(আপনি)_You.webp" alt="তুমি(আপনি)">
-                <h3>তুমি(আপনি)</h3>
-                <p>You</p>
+                <img src="avatars/তুমি(আপনি)_You.webp" alt="তুমি">
+                <p>তুমি</p>
             </div>
 
             <div class="card">
-                <img src="avatars/তৃতীয়_Third.webp" alt="তৃতীয়">
-                <h3>তৃতীয়</h3>
-                <p>Third</p>
-            </div>
-
-            <div class="card">
-                <img src="avatars/তোমার(আপনার)_Your.webp" alt="তোমার(আপনার)">
-                <h3>তোমার(আপনার)</h3>
-                <p>Your</p>
+                <img src="avatars/তোমার(আপনার)_Your.webp" alt="তোমার">
+                <p>তোমার</p>
             </div>
 
             <div class="card">
                 <img src="avatars/থামো_Stop.webp" alt="থামো">
-                <h3>থামো</h3>
-                <p>Stop</p>
+                <p>থামো</p>
             </div>
 
             <div class="card">
                 <img src="avatars/দাঁড়াও_Stand.webp" alt="দাঁড়াও">
-                <h3>দাঁড়াও</h3>
-                <p>Stand</p>
+                <p>দাঁড়াও</p>
             </div>
 
-        </div>
-        
-        <h2 class="section-title">Speech to Sign (Supported Vocabulary)</h2>
-        <p style="margin-bottom: 20px; color: #718096;">These root words and their grammatical variations are supported by the avatar system.</p>
-        <div class="words-list">
-<div class="word-badge">অপেক্ষা করো</div>
-<div class="word-badge">অফিস</div>
-<div class="word-badge">আইন</div>
-<div class="word-badge">আঙুল</div>
-<div class="word-badge">আজ</div>
-<div class="word-badge">আট</div>
-<div class="word-badge">আদা</div>
-<div class="word-badge">আমার</div>
-<div class="word-badge">আমি</div>
-<div class="word-badge">আয়না</div>
-<div class="word-badge">ইনস্টাগ্রাম</div>
-<div class="word-badge">এক</div>
-<div class="word-badge">এখন</div>
-<div class="word-badge">এটি</div>
-<div class="word-badge">ওটা(সেটা)</div>
-<div class="word-badge">ওয়াই-ফাই</div>
-<div class="word-badge">কখন</div>
-<div class="word-badge">কর্মচারী</div>
-<div class="word-badge">কাঁধ</div>
-<div class="word-badge">কাজ</div>
-<div class="word-badge">কাঠ</div>
-<div class="word-badge">কান</div>
-<div class="word-badge">কী</div>
-<div class="word-badge">কে</div>
-<div class="word-badge">ক্লান্ত</div>
-<div class="word-badge">ক্ষুধার্ত</div>
-<div class="word-badge">খাওয়া</div>
-<div class="word-badge">খারাপ</div>
-<div class="word-badge">গণিত</div>
-<div class="word-badge">গরু</div>
-<div class="word-badge">গলা</div>
-<div class="word-badge">গুণ</div>
-<div class="word-badge">ঘড়ি</div>
-<div class="word-badge">ঘুমানো</div>
-<div class="word-badge">চট্টগ্রাম</div>
-<div class="word-badge">চাচা(মামা)</div>
-<div class="word-badge">চামড়া</div>
-<div class="word-badge">চার</div>
-<div class="word-badge">চুপ করো</div>
-<div class="word-badge">চুল</div>
-<div class="word-badge">চোখ</div>
-<div class="word-badge">ছয়</div>
-<div class="word-badge">ছোট</div>
-<div class="word-badge">জিহ্বা</div>
-<div class="word-badge">জুতো</div>
-<div class="word-badge">জেল</div>
-<div class="word-badge">জ্বর</div>
-<div class="word-badge">টয়লেট</div>
-<div class="word-badge">টুপি</div>
-<div class="word-badge">ঠান্ডা</div>
-<div class="word-badge">ডাক্তার</div>
-<div class="word-badge">ডান</div>
-<div class="word-badge">ডিম</div>
-<div class="word-badge">তার</div>
-<div class="word-badge">তিন</div>
-<div class="word-badge">তুমি(আপনি)</div>
-<div class="word-badge">তৃতীয়</div>
-<div class="word-badge">তোমার(আপনার)</div>
-<div class="word-badge">থামো</div>
-<div class="word-badge">দাঁড়াও</div>
+            <div class="card">
+                <img src="avatars/দাঁত_Teeth.webp" alt="দাঁত">
+                <p>দাঁত</p>
+            </div>
 
+            <div class="card">
+                <img src="avatars/দাঁত মাজা_Brush teeth.webp" alt="দাঁত মাজা">
+                <p>দাঁত মাজা</p>
+            </div>
+
+            <div class="card">
+                <img src="avatars/দুঃখিত_Sorry.webp" alt="দুঃখিত">
+                <p>দুঃখিত</p>
+            </div>
+
+            <div class="card">
+                <img src="avatars/দৃষ্টি_Sight.webp" alt="দৃষ্টি">
+                <p>দৃষ্টি</p>
+            </div>
+
+            <div class="card">
+                <img src="avatars/নয়_Nine.webp" alt="নয়">
+                <p>নয়</p>
+            </div>
+
+            <div class="card">
+                <img src="avatars/নাক_Nose.webp" alt="নাক">
+                <p>নাক</p>
+            </div>
+
+            <div class="card">
+                <img src="avatars/চাচা(মামা)_Uncle.webp" alt="মামা">
+                <p>মামা</p>
+            </div>
+
+            <div class="card">
+                <img src="avatars/ওটা(সেটা)_That.webp" alt="সেটা">
+                <p>সেটা</p>
+            </div>
         </div>
     </div>
 </body>
