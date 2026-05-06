@@ -1,7 +1,8 @@
-const CACHE_NAME = 'sign-translator-v1';
+const CACHE_NAME = 'sign-translator-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './dictionary.html',
   './css/style.css',
   './js/app.js',
   './js/config.js',
