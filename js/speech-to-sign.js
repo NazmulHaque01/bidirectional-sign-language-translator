@@ -2,7 +2,7 @@
 
 // Word to image mapping using avatar files
 const wordImageMap = {
-    "অপেক্ষা করো": "অপেক্ষা করো_Wait.webp",
+    "অপেক্ষা করো": "অপেক্ষা করো_Wait.webp",
     "অফিস": "অফিস_Office.webp",
     "আইন": "আইন_Law.webp",
     "আজ": "আজ_Today.webp",

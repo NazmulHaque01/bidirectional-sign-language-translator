@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bidirectional Bangla Sign Language Translator — Real-time gesture recognition and speech-to-sign translation">
+    <meta name="description"
+        content="Bidirectional Bangla Sign Language Translator — Real-time gesture recognition and speech-to-sign translation">
     <title>🤟 Bangla Sign Language Translator</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
@@ -58,7 +59,9 @@
                     <div class="result-box">
                         <h3>Current Prediction</h3>
                         <div class="gesture-name no-hand" id="stsGestureName">✋ Show your hand</div>
-                        <div class="confidence-bar"><div class="confidence-fill" id="stsConfidenceFill"></div></div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="stsConfidenceFill"></div>
+                        </div>
                         <div class="confidence-text" id="stsConfidenceText">Confidence: --</div>
                     </div>
 
@@ -81,12 +84,8 @@
                     <div class="panel-title">🗣️ Speech → Sign</div>
 
                     <!-- Text Input -->
-                    <textarea
-                        id="sptsTextInput"
-                        class="spts-textarea"
-                        placeholder="Enter Bengali text or use voice input..."
-                        rows="3"
-                    ></textarea>
+                    <textarea id="sptsTextInput" class="spts-textarea"
+                        placeholder="Enter Bengali text or use voice input..." rows="3"></textarea>
 
                     <!-- Voice Status -->
                     <div id="sptsVoiceStatus" class="voice-status"></div>
@@ -116,12 +115,15 @@
         <!-- Settings Modal -->
         <div class="settings-modal" id="settingsModal">
             <h2>⚙️ App Settings</h2>
-            
+
             <!-- Dictionary Link -->
-              <div class="settings-row" style="margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border); display: block; text-align: center;">
-                  <a href="dictionary.html" class="btn btn-primary" style="text-decoration: none; padding: 10px 16px; font-size: 1em; display: block; width: 100%; box-sizing: border-box;">Supported Signs and Words</a>
-              </div>
-            
+            <div class="settings-row"
+                style="margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border); display: block; text-align: center;">
+                <a href="dictionary.html" class="btn btn-primary"
+                    style="text-decoration: none; padding: 10px 16px; font-size: 1em; display: block; width: 100%; box-sizing: border-box;">Supported
+                    Signs and Words</a>
+            </div>
+
             <!-- Camera Aspect Ratio -->
             <div class="settings-row">
                 <div class="settings-label">📐 Camera View</div>
@@ -140,7 +142,8 @@
                 <div class="settings-label">
                     🖼️ Missing Avatar
                     <span class="info-icon">?
-                        <span class="info-tooltip">Choose what to show when there's no sign animation for a word: either the word as text, or the neutral pose.</span>
+                        <span class="info-tooltip">Choose what to show when there's no sign animation for a word: either
+                            the word as text, or the neutral pose.</span>
                     </span>
                 </div>
                 <div class="settings-control">
@@ -186,7 +189,7 @@
         <!-- Footer -->
         <footer class="footer">
             <p>Built with MediaPipe Hand &amp; Pose Landmarker + Pure JS Inference</p>
-            <p>Model Accuracy: 83.7% | 60 Gesture Classes | 50 Avatars</p>
+            <p>Model Accuracy: 96.99% | 60 Gesture Classes | 50 Avatars</p>
         </footer>
     </div>
 
