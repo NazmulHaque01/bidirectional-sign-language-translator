@@ -1,7 +1,7 @@
 // SPEECH TO SIGN MODULE — Voice/text input → Avatar display
 
 const wordImageMap = {
-    "তোমার(আপনার)": "তোমার(আপনার)_Your.webp",
+    "তোমার(আপনার)": "তোমার(আপনার)_Your.webp",
     "কখন": "কখন_When.webp",
     "আজ": "আজ_Today.webp",
     "ছয়": "ছয়_Six.webp",
@@ -13,7 +13,7 @@ const wordImageMap = {
     "আইন": "আইন_Law.webp",
     "নয়": "নয়_Nine.webp",
     "কাঁধ": "কাঁধ_Shoulder.webp",
-    "জুতো": "জুতো_Shoe.webp",
+    "জুতো": "জুতো_Shoe.webp",
     "ঘুমানো": "ঘুমানো_Sleeping.webp",
     "ওটা(সেটা)": "ওটা(সেটা)_That.webp",
     "গরু": "গরু_Cow.webp",
@@ -31,7 +31,7 @@ const wordImageMap = {
     "কে": "কে_Who.webp",
     "জ্বর": "জ্বর_Fever.webp",
     "ডিম": "ডিম_Egg.webp",
-    "দাঁত": "দাঁড়াও_Stand.webp",
+    "দাঁড়াও_Stand": "দাঁড়াও_Stand.webp",
     "নাক": "নাক_Nose.webp",
     "গুণ": "গুণ_Multiplication.webp",
     "ক্লান্ত": "ক্লান্ত_Tired.webp",
@@ -47,7 +47,8 @@ const wordImageMap = {
     "চোখ": "চোখ_Eye.webp",
     "ঠান্ডা": "ঠান্ডা_Cold.webp",
     "দৃষ্টি": "দৃষ্টি_Sight.webp",
-    "দাঁত মাজা": "দাঁড়াও_Stand.webp",
+    "দাঁত":"দাঁত_Teeth.webp",
+    "দাঁত মাজা": "দাঁত মাজা_Brush teeth.webp",
     "চার": "চার_Four.webp",
     "তুমি(আপনি)": "তুমি(আপনি)_You.webp",
     "এটি": "এটি_This.webp",
